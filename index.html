@@ -9,13 +9,13 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>img{min-width: 100%} a:hover{text-decoration: underline;}</style>
   <style type="text/tailwindcss">
-    article {@apply flex items-center justify-center w-screen h-screen transition-all duration-500}
+    article {@apply flex items-center justify-center w-screen h-screen}
   </style>
 </head>
-<body x-data="{
+<body class="overflow-hidden" x-data="{
   current: 0,
   get computedSlideStyles() {
-    return `-${this.current * 100}%`
+    return `-${this.current * innerHeight}px`
   },
 
   next() {
@@ -32,8 +32,8 @@
   ]
   }">
 
-  <section @keydown.window.down="next()" @keydown.window.up="prev()">
-    <article :style="{translate: `0 ${computedSlideStyles}`}" x-data="{
+  <section :style="{translate: `0 ${computedSlideStyles}`}" class="transition-all duration-500" @keydown.window.down="next()" @keydown.window.up="prev()">
+    <article  x-data="{
       links: [
         {href: 'https://html.spec.whatwg.org', hrefTitle: 'html.spec.whatwg.org', metaTitle: 'Спецификация комитета google'},
         {href: 'https://www.w3.org/', hrefTitle: 'www.w3.org', metaTitle: 'Спецификация W3C'}
@@ -51,7 +51,7 @@
     </div>
     </article>
 
-    <article :style="{translate: `0 ${computedSlideStyles}`}">
+    <article >
       <img :src="slides[0]" />
     </article>
 
