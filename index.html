@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>img{min-width: 100%} a:hover{text-decoration: underline;}</style>
+  <style type="text/tailwindcss">
+    article {@apply flex items-center justify-center w-screen h-screen transition-all duration-500}
+  </style>
+</head>
+<body x-data="{
+  current: 0,
+  get computedSlideStyles() {
+    return `-${this.current * 100}%`
+  },
+
+  next() {
+    this.current +=1
+  },
+  prev() {
+    if (this.current <= 0) return
+    this.current -=1
+  },
+  slides: [
+    './img/slide1.png',
+    './img/slide2.png',
+    './img/slide3.png',
+  ]
+  }">
+
+  <section @keydown.window.down="next()" @keydown.window.up="prev()">
+    <article :style="{translate: `0 ${computedSlideStyles}`}" x-data="{
+      links: [
+        {href: 'https://html.spec.whatwg.org', hrefTitle: 'html.spec.whatwg.org', metaTitle: 'Спецификация комитета google'},
+        {href: 'https://www.w3.org/', hrefTitle: 'www.w3.org', metaTitle: 'Спецификация W3C'}
+      ]
+    }" class=" bg-gradient-to-r from-purple-500 to-pink-500">
+    <div class="text-4xl">
+      <h1>источники: <span x-text="current"></span></h1>
+      <ul class="space-y-4">
+        <template x-for="{href,hrefTitle,metaTitle} in links">
+          <li>
+            <span> <a :href="href" x-text="hrefTitle"> </a> - <span x-text="metaTitle"></span> </span>
+          </li>
+        </template>
+      </ul>
+    </div>
+    </article>
+
+    <article :style="{translate: `0 ${computedSlideStyles}`}">
+      <img :src="slides[0]" />
+    </article>
+
+  </section>
+
+</body>
+</html>
